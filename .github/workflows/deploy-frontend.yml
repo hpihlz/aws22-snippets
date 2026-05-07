@@ -1,0 +1,36 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+      - ".github/workflows/deploy-frontend.yml"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Upload frontend to S3 and invalidate CloudFront
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::979646711832:role/SnippetsFrontendGitHubDeployPolicy
+          aws-region: eu-west-1
+
+      - name: Sync frontend files to S3
+        run: |
+          aws s3 sync frontend/ s3://snippets-frontend-2600405-0056 --delete
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E30TIYBMNPK99C \
+            --paths "/*"
