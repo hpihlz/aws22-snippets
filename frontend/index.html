@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snippets</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe3ee;
+      --danger: #dc2626;
+      --danger-dark: #b91c1c;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .header-card,
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .header-card {
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      color: var(--primary);
+    }
+
+    .subtext {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: var(--danger-dark);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .status {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .login-panel {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .main-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      padding: 20px;
+      max-width: 100%;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      margin-top: 14px;
+      color: #374151;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      background: white;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    .form-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .snippets-list {
+      display: grid;
+      gap: 14px;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .snippet {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      background: #fafcff;
+    }
+
+    .snippet-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .snippet-topic {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .snippet-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .snippet-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    pre {
+      margin: 10px 0 0;
+      background: #1e293b;
+      color: #f9fafb;
+      padding: 12px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+
+    .message {
+      margin-top: 12px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+
+    .message.ok {
+      color: #15803d;
+    }
+
+    .message.err {
+      color: #b91c1c;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-style: italic;
+      padding: 8px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header-card">
+      <div class="header-top">
+        <div>
+          <h1>Snippets</h1>          
+        </div>
+
+        <div class="auth-buttons">
+          <button id="loginBtn" class="btn-primary">Sign in</button>
+          <button id="logoutBtn" class="btn-danger hidden">Sign out</button>
+        </div>
+      </div>
+
+      <div id="authStatus" class="status">Checking sign-in status...</div>
+    </div>
+
+    <div id="loggedOutPanel" class="card login-panel hidden">
+      <h2>Please sign in</h2>
+      <p>You must sign in before snippets can be viewed or saved.</p>
+      <button id="loginBtn2" class="btn-primary">Sign in</button>
+    </div>
+
+    <div id="appContent" class="main-grid hidden">
+      <div class="card">
+        <h2>Add snippet</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="topic">Topic</label>
+            <select id="topic">
+              <option value="git">git</option>
+              <option value="powershell">powershell</option>
+              <option value="windows">windows</option>
+              <option value="linux">linux</option>
+              <option value="misc">misc</option>
+            </select>
+
+            <label for="title">Title</label>
+            <input id="title" type="text" placeholder="Short title" />
+          </div>
+
+          <div>
+            <label for="body">Snippet</label>
+            <textarea id="body" placeholder="Paste your snippet here..."></textarea>
+
+            <div class="form-actions">
+              <button id="saveBtn" class="btn-primary">Save snippet</button>
+              <button id="clearBtn" class="btn-secondary">Clear</button>
+            </div>
+
+            <div id="saveMessage" class="message"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <div>
+            <h2 style="margin:0 0 6px 0;">Browse snippets</h2>
+            <div class="subtext">Choose a topic to load saved snippets</div>
+          </div>
+
+          <div style="min-width:180px;">
+            <label for="filterTopic" style="margin-top:0;">Topic filter</label>
+            <select id="filterTopic">
+              <option value="git">git</option>
+              <option value="powershell">powershell</option>
+              <option value="windows">windows</option>
+              <option value="linux">linux</option>
+              <option value="misc">misc</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="loadBtn" class="btn-primary">Load snippets</button>
+
+        <div id="snippetsList" class="snippets-list">
+          <div class="empty">No snippets loaded yet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const COGNITO_DOMAIN = "https://eu-west-1tdzhzynjt.auth.eu-west-1.amazoncognito.com";
+    const CLIENT_ID = "ep3kntf7ecnukv4cs05co475i";
+    const REDIRECT_URI = "https://d19ko35m80qo8d.cloudfront.net/";
+    const LOGOUT_URI = "https://d19ko35m80qo8d.cloudfront.net/";
+    const API_BASE_URL = "https://swxrui1jik.execute-api.eu-west-1.amazonaws.com/prod";
+
+    let idToken = null;
+
+    const loginBtn = document.getElementById("loginBtn");
+    const loginBtn2 = document.getElementById("loginBtn2");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const authStatus = document.getElementById("authStatus");
+    const loggedOutPanel = document.getElementById("loggedOutPanel");
+    const appContent = document.getElementById("appContent");
+
+    const topicEl = document.getElementById("topic");
+    const titleEl = document.getElementById("title");
+    const bodyEl = document.getElementById("body");
+    const saveBtn = document.getElementById("saveBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const saveMessage = document.getElementById("saveMessage");
+
+    const filterTopicEl = document.getElementById("filterTopic");
+    const loadBtn = document.getElementById("loadBtn");
+    const snippetsList = document.getElementById("snippetsList");
+
+    function buildLoginUrl() {
+      const url = new URL(COGNITO_DOMAIN + "/login");
+      url.searchParams.set("client_id", CLIENT_ID);
+      url.searchParams.set("response_type", "token");
+      url.searchParams.set("scope", "openid email");
+      url.searchParams.set("redirect_uri", REDIRECT_URI);
+      return url.toString();
+    }
+
+    function buildLogoutUrl() {
+      const url = new URL(COGNITO_DOMAIN + "/logout");
+      url.searchParams.set("client_id", CLIENT_ID);
+      url.searchParams.set("logout_uri", LOGOUT_URI);
+      return url.toString();
+    }
+
+    function parseHashTokens() {
+      if (!window.location.hash) return null;
+
+      const params = new URLSearchParams(window.location.hash.substring(1));
+
+      return {
+        id_token: params.get("id_token"),
+        error: params.get("error"),
+        error_description: params.get("error_description")
+      };
+    }
+
+    function clearTokens() {
+      localStorage.removeItem("snippets_id_token");
+      idToken = null;
+    }
+
+    function setLoggedOutUI(message = "Not signed in.") {
+      authStatus.textContent = message;
+      loginBtn.classList.remove("hidden");
+      logoutBtn.classList.add("hidden");
+      loggedOutPanel.classList.remove("hidden");
+      appContent.classList.add("hidden");
+      snippetsList.innerHTML = `<div class="empty">Sign in to view snippets.</div>`;
+    }
+
+    function setLoggedInUI(message = "Signed in.") {
+      authStatus.textContent = message;
+      loginBtn.classList.add("hidden");
+      logoutBtn.classList.remove("hidden");
+      loggedOutPanel.classList.add("hidden");
+      appContent.classList.remove("hidden");
+    }
+
+    function initializeAuth() {
+      const hashTokens = parseHashTokens();
+
+      if (hashTokens && hashTokens.error) {
+        clearTokens();
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setLoggedOutUI("Sign-in failed.");
+        return;
+      }
+
+      if (hashTokens && hashTokens.id_token) {
+        idToken = hashTokens.id_token;
+        localStorage.setItem("snippets_id_token", idToken);
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setLoggedInUI("Signed in successfully.");
+        return;
+      }
+
+      idToken = localStorage.getItem("snippets_id_token");
+
+      if (idToken) {
+        setLoggedInUI("Signed in.");
+      } else {
+        setLoggedOutUI("Not signed in.");
+      }
+    }
+
+    async function apiFetch(path, options = {}) {
+      if (!idToken) {
+        throw new Error("No idToken available.");
+      }
+
+      const headers = {
+        ...(options.headers || {}),
+        "Authorization": `Bearer ${idToken}`
+      };
+
+      const response = await fetch(`${API_BASE_URL}${path}`, {
+        ...options,
+        headers
+      });
+
+      if (response.status === 401 || response.status === 403) {
+        clearTokens();
+        setLoggedOutUI("Session expired or unauthorized. Please sign in again.");
+        throw new Error("Unauthorized");
+      }
+
+      return response;
+    }
+
+    async function loadSnippets() {
+      const topic = filterTopicEl.value;
+      snippetsList.innerHTML = `<div class="empty">Loading snippets...</div>`;
+
+      try {
+        const response = await apiFetch(`/snippets?topic=${encodeURIComponent(topic)}`, {
+          method: "GET"
+        });
+
+        if (!response.ok) {
+          throw new Error(`Load failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        renderSnippets(data);
+      } catch (err) {
+        console.error(err);
+        snippetsList.innerHTML = `<div class="empty">Failed to load snippets.</div>`;
+      }
+    }
+
+    function renderSnippets(items) {
+      if (!Array.isArray(items) || items.length === 0) {
+        snippetsList.innerHTML = `<div class="empty">No snippets found for this topic.</div>`;
+        return;
+      }
+
+      snippetsList.innerHTML = items.map(item => {
+        const safeTitle = escapeHtml(item.title || "(Untitled)");
+        const safeTopic = escapeHtml(item.topic || "misc");
+        const safeBody = escapeHtml(item.body || item.content || "");
+        const safeCreated = escapeHtml(item.createdAt || "");
+
+        return `
+          <div class="snippet">
+            <div class="snippet-header">
+              <div>
+                <div class="snippet-topic">${safeTopic}</div>
+                <h3 class="snippet-title">${safeTitle}</h3>
+              </div>
+              <div class="snippet-meta">${safeCreated}</div>
+            </div>
+            <pre>${safeBody}</pre>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function saveSnippet() {
+      const topic = topicEl.value.trim();
+      const title = titleEl.value.trim();
+      const body = bodyEl.value.trim();
+
+      if (!title || !body) {
+        setSaveMessage("Title and snippet content are required.", false);
+        return;
+      }
+
+      saveBtn.disabled = true;
+      setSaveMessage("Saving...", true);
+
+      try {
+        const response = await apiFetch("/snippets", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            topic,
+            title,
+            body
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Save failed: ${response.status}`);
+        }
+
+        setSaveMessage("Snippet saved successfully.", true);
+        titleEl.value = "";
+        bodyEl.value = "";
+
+        if (filterTopicEl.value === topic) {
+          await loadSnippets();
+        }
+      } catch (err) {
+        console.error(err);
+        setSaveMessage("Failed to save snippet.", false);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    }
+
+    function setSaveMessage(message, ok) {
+      saveMessage.textContent = message;
+      saveMessage.className = `message ${ok ? "ok" : "err"}`;
+    }
+
+    function clearForm() {
+      titleEl.value = "";
+      bodyEl.value = "";
+      saveMessage.textContent = "";
+      saveMessage.className = "message";
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    loginBtn.addEventListener("click", () => {
+      window.location.href = buildLoginUrl();
+    });
+
+    loginBtn2.addEventListener("click", () => {
+      window.location.href = buildLoginUrl();
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      clearTokens();
+      window.location.href = buildLogoutUrl();
+    });
+
+    saveBtn.addEventListener("click", saveSnippet);
+    clearBtn.addEventListener("click", clearForm);
+    loadBtn.addEventListener("click", loadSnippets);
+
+    initializeAuth();
+  </script>
+</body>
+</html>
